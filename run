@@ -1,0 +1,46 @@
+#!/bin/sh
+
+rebuild(){
+    clean
+    build
+}
+
+build() {
+    mkdir -p build
+    cd build
+    cmake ../app -G Ninja
+    ninja
+    # exec
+    src/sample    
+}
+
+clean() {
+    rm -rf build
+}
+
+case "$1" in
+    rebuild)
+        rebuild
+        echo
+        ;;
+    build)
+        build $2
+        echo
+        ;;
+    clean)
+        clean
+        echo
+        ;;
+    *)
+
+        cat << EOF
+rebuild      rebuild an app
+build        build an app
+clean        all clear
+EOF
+
+        exit 1
+esac
+
+exit 0
+
